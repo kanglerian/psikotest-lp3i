@@ -24,19 +24,14 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git stash --include-untracked
-          git fetch origin
           if git ls-remote --exit-code --heads origin cpanel; then
-            git checkout cpanel
-            git pull origin cpanel --rebase
-          else
-            git checkout --orphan cpanel
+            git push origin --delete cpanel || true
           fi
-          git rm -rf .
+          git checkout --orphan cpanel
+          npm run build
+          rm -rf README.md index.html node_modules package-lock.json package.json public src tailwind.config.js vite.config.js
           mv -f dist/* .
-          rm -rf dist
+          rm -rf dist .github .env .eslintrc.cjs .gitignore
           git add .
           git commit -m "Deploy to GitHub Pages"
           git push -u origin cpanel
-          git checkout -
-          git stash pop
