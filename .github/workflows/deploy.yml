@@ -46,6 +46,9 @@ jobs:
         with:
           # Upload dist folder
           path: './dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
       - name: Push to cpanel branch
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOY }}
@@ -57,6 +60,3 @@ jobs:
           git checkout main -- dist
           git commit -m "Update 'dist' content"
           git push -u origin cpanel
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
