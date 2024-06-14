@@ -49,14 +49,3 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
-      - name: Push to cpanel branch
-        env:
-          GITHUB_TOKEN: ${{ secrets.DEPLOY }}
-        run: |
-          git config user.email "actions@github.com"
-          git config user.name "GitHub Actions"
-          git checkout -b cpanel origin/cpanel || git checkout -b cpanel
-          git rm -rf .
-          git checkout main -- dist
-          git commit -m "Update 'dist' content"
-          git push -u origin cpanel
