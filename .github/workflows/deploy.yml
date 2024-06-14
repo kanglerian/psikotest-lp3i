@@ -38,9 +38,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
       - name: Build
-        run: |
-          npm run build
-          ls -l
+        run: npm run build
       - name: Setup Pages
         uses: actions/configure-pages@v4
       - name: Upload artifact
@@ -48,9 +46,15 @@ jobs:
         with:
           # Upload dist folder
           path: './dist'
-      - name: 'Kuya'
+      - name: Push to cpanel branch
         run: |
-          ls -l
+          git config --global user.email "actions@github.com"
+          git config --global user.name "GitHub Actions"
+          git checkout -b cpanel origin/cpanel || git checkout -b cpanel
+          git rm -rf .
+          git checkout main -- dist
+          git commit -m "Update 'dist' content"
+          git push -u origin cpanel
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
