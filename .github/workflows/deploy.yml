@@ -46,12 +46,6 @@ jobs:
         with:
           # Upload dist folder
           path: './dist'
-      - name: Create cpanel branch
-        run: |
-            git checkout -b cpanel
-            git add dist/
-            git commit -m "Add dist content for cpanel branch"
-            git push -u origin cpanel
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
