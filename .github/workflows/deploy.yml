@@ -47,6 +47,8 @@ jobs:
           # Upload dist folder
           path: './dist'
       - name: Push to cpanel branch
+        env:
+          GITHUB_TOKEN: ${{ secrets.DEPLOY }}
         run: |
           git config --global user.email "actions@github.com"
           git config --global user.name "GitHub Actions"
